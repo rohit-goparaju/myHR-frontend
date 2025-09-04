@@ -3,18 +3,32 @@
     top: 10%;
 }
 
+.loginFormContainer{
+    width: 75%;
+}
 
+.welcomeCol{
+    padding-left: 3vw;
+}
 
 @media only screen and (max-width: 991px){
     .loginContainer{
         position: static;
+        margin-bottom: 5vh;
+        /* border: 2px solid red; */
     }
     .welcomeCol{
     display: flex;
     justify-content: center;
     align-items: center;   
+    padding-left: 0;
     }
     :root{
     	--hr-portal-text-size: 9vw;
     }
+    .loginFormContainer{
+    width: 100%;
 }
+
+}
+

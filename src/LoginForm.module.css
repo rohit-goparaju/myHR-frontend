@@ -1,0 +1,13 @@
+.loginFormContainer{
+    /* border: 2px solid red; */
+    animation: fadeIn 0.5s linear 1.8s both;
+}
+
+@keyframes fadeIn{
+    from{
+        scale: 0;
+    }
+    to{
+        scale: 1;
+    }
+}

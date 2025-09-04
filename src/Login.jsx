@@ -1,5 +1,6 @@
 import WelcomeText from "./WelcomeText";
 import styles from './Login.module.css';
+import LoginForm from "./LoginForm";
 
 export default function Login(){
     return (
@@ -9,7 +10,9 @@ export default function Login(){
                 <WelcomeText></WelcomeText>  
             </div>
             <div className="col-lg-6 d-flex justify-content-center align-items-center p-5">
-                <h1>Login page coming soon....</h1>
+                <div className={styles.loginFormContainer}>
+                    <LoginForm></LoginForm>
+                </div>
             </div>
         </div>
         </>

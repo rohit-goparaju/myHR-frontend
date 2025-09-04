@@ -7,6 +7,7 @@ export default function Home(){
         <>
         <HomeNav></HomeNav>
         <Outlet></Outlet>
+        <div style={{height: "5vh"}}></div>
         <MyFooter></MyFooter>
         </>
     );
