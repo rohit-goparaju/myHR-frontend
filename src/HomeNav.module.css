@@ -1,0 +1,9 @@
+.specialEliteText{
+    font-family: 'Special Elite', Courier, monospace;
+    font-size: 1.3em;
+}
+
+.logoText{
+    composes: specialEliteText;
+    color: white;
+}

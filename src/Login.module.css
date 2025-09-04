@@ -1,0 +1,20 @@
+.loginContainer{
+    position: relative;
+    top: 10%;
+}
+
+
+
+@media only screen and (max-width: 991px){
+    .loginContainer{
+        position: static;
+    }
+    .welcomeCol{
+    display: flex;
+    justify-content: center;
+    align-items: center;   
+    }
+    :root{
+    	--hr-portal-text-size: 9vw;
+    }
+}
