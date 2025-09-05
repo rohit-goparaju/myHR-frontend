@@ -1,8 +1,14 @@
 import { useState } from "react";
 import styles from './LoginForm.module.css';
+import { Link, useNavigate } from "react-router-dom";
+import axios from 'axios';
+import { useUserContext } from "./App";
 
 export default function LoginForm(){
     const [inputs, setInputs] = useState({});
+    const {userValidity, setUserValidity} = useUserContext();
+    // const [user, setUser] = useState("");
+    const navigate = useNavigate();
 
     function handleChange(event){
         const {name, value} = event.target;
@@ -11,21 +17,39 @@ export default function LoginForm(){
 
     function handleSubmit(event){
         event.preventDefault();
-        console.log(inputs);
+        axios.get("http://localhost:8080/myHRBackend/test").then(
+            (res)=>{
+                // console.log(res);
+                localStorage.setItem("userValidity", res.data);
+                setUserValidity(res.data === "valid");
+                // setUser(res.data);
+                navigate("/Dashboard", {replace: true});
+            }
+        )
     }
 
+    if(userValidity){
+        return(
+            <h1>Welcome user</h1>
+        );
+    }
+
+    else
     return(
         <div className={styles.loginFormContainer}>
         <form onSubmit={handleSubmit} className="d-flex flex-column shadow p-5 rounded border border-1">
             <label className="form-label">
                 Username: 
-                <input type="text" name="username" value={inputs.username || ""} className="form-control" onChange={handleChange}></input>
+                <input type="text" name="username" value={inputs.username || ""} className="form-control" onChange={handleChange} placeholder="Enter Username" pattern="[a-zA-Z][a-zA-Z0-9\.]*@myHR\.in" title="must not contain spaces, must start with an alphabet, can contain alphabets dots and numbers, must end with domain @myHR.in " required></input>
             </label>
             <label className="form-label">
                 Password:
-                <input type="password" name="pwd" value={inputs.pwd || ""} className="form-control" onChange={handleChange}></input>
+                <input type="password" name="pwd" value={inputs.pwd || ""} className="form-control" onChange={handleChange} placeholder="Enter Password" pattern="^(([a-z](?=[^\s]*[A-Z]+[^\s]*))|([A-Z](?=[^\s]*[a-z]+[^\s]*)))(?=[^\s]*[^a-zA-Z0-9]+[^\s]*)(?=[^\s]*[0-9]+[^\s]*)[^\s]*" title="Must start with a letter (either lowercase or uppercase)., If it starts lowercase → must contain an uppercase somewhere.,If it starts uppercase → must contain a lowercase somewhere.,Must contain at least one special character.,Must contain at least one digit.,Must not contain spaces." required></input>
             </label>
             <input type="submit" value="Login" className="btn btn-primary"></input>
+            <div className="text-end">
+                <Link to="/">Forgot password?</Link>
+            </div>
         </form>
         </div>
     );

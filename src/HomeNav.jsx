@@ -1,8 +1,13 @@
 import { Link, NavLink } from "react-router-dom";
 import logo from './assets/anger-symbol-svgrepo-com.svg';
 import styles from './HomeNav.module.css';
+import { useContext, useEffect } from "react";
+import { useState } from "react";
+import { useUserContext } from "./App";
 
 export default function HomeNav(){
+    const {userValidity} = useUserContext();
+    
     return (
         <nav className="navbar navbar-dark bg-dark">
             <Link className="navbar-brand" to="/">
@@ -19,6 +24,17 @@ export default function HomeNav(){
                 <li className="nav-item">
                     <NavLink to='/About' className="nav-link">About</NavLink>
                 </li>
+                {
+                userValidity && 
+                <>               
+                <li className="nav-item">
+                    <NavLink to="/Dashboard" className="nav-link">Dashboard</NavLink>
+                </li>
+                <li className="nav-item">
+                    <NavLink to="/Logout" className="nav-link">Logout</NavLink>
+                </li>
+                </>
+                }
             </ul>
         </nav>
     );
