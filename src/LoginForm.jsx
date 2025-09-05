@@ -18,21 +18,26 @@ export default function LoginForm(){
 
     function handleSubmit(event){
         event.preventDefault();
-        BackendAxios.post("/Login",
-            {
-                username : inputs.username,
-                password : inputs.pwd
-            }, 
-            {withCredentials : true}
-        ).then(
-            (res)=>{
-                localStorage.setItem("userValidity", res.data);
-                setUserValidity(res.data === "valid");
-                setUserPwdIncorrect(res.data);
-                if(res.data === "valid")
-                    navigate("/Dashboard", {replace: true});
-            }
-        )
+        if(inputs.pwd.match(/^(([a-z](?=[^\s]*[A-Z]+[^\s]*))|([A-Z](?=[^\s]*[a-z]+[^\s]*)))(?=[^\s]*[^a-zA-Z0-9]+[^\s]*)(?=[^\s]*[0-9]+[^\s]*)[^\s]*/g) && 
+            inputs.username.match(/[a-z][a-z0-9\.]*@myHR\.in/g)){
+                BackendAxios.post("/Login",
+                    {
+                        username : inputs.username,
+                        password : inputs.pwd
+                    }, 
+                    {withCredentials : true}
+                ).then(
+                    (res)=>{
+                        localStorage.setItem("userValidity", res.data);
+                        setUserValidity(res.data === "valid");
+                        setUserPwdIncorrect(res.data);
+                        if(res.data === "valid")
+                            navigate("/Dashboard", {replace: true});
+                    }
+                )
+        }else{
+            setUserPwdIncorrect("invalid");
+        }
     }
 
     if(userValidity){
