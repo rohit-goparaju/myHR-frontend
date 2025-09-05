@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from './LoginForm.module.css';
 import { Link, useNavigate } from "react-router-dom";
-import axios from 'axios';
+import BackendAxios from './BackendAxios';
 import { useUserContext } from "./App";
 
 export default function LoginForm(){
@@ -17,12 +17,10 @@ export default function LoginForm(){
 
     function handleSubmit(event){
         event.preventDefault();
-        axios.get("http://localhost:8080/myHRBackend/test").then(
+        BackendAxios.get("/test").then(
             (res)=>{
-                // console.log(res);
                 localStorage.setItem("userValidity", res.data);
                 setUserValidity(res.data === "valid");
-                // setUser(res.data);
                 navigate("/Dashboard", {replace: true});
             }
         )

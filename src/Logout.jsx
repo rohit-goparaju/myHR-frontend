@@ -7,7 +7,7 @@ export default function Logout(){
     const {setUserValidity} = useUserContext();
     useEffect(
         ()=>{
-            localStorage.removeItem("userValidity");
+            localStorage.clear();
             setUserValidity(false);
             navigate("/", {replace : true});
         }
