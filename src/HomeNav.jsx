@@ -27,12 +27,18 @@ export default function HomeNav(){
                 {
                 userValidityWrapper.validity === "VALID" && 
                 <>               
-                <li className="nav-item">
-                    <NavLink to="/Dashboard" className="nav-link">Dashboard</NavLink>
-                </li>
-                <li className="nav-item">
-                    <NavLink to="/Logout" className="nav-link">Logout</NavLink>
-                </li>
+                    <li className="nav-item">
+                        <NavLink to="/Dashboard" className="nav-link">Dashboard</NavLink>
+                    </li>
+
+                    <li className="nav-item dropdown">
+                        <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">{userValidityWrapper.user.username}</a>
+                        <ul id="userSettingsDropdownList" className="dropdown-menu position-absolute">
+                            <li>
+                                <NavLink to="/Logout" className="dropdown-item">Logout</NavLink>
+                            </li>
+                        </ul>
+                    </li>
                 </>
                 }
             </ul>
