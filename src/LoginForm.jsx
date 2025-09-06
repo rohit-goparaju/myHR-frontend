@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from './LoginForm.module.css';
 import { Link, useNavigate } from "react-router-dom";
 import BackendAxios from './BackendAxios';
@@ -6,7 +6,7 @@ import { useUserContext } from "./App";
 
 export default function LoginForm() {
     const [inputs, setInputs] = useState({});
-    const { userValidity, setUserValidity } = useUserContext();
+    const { userValidityWrapper, setUserValidityWrapper } = useUserContext();
     // const [user, setUser] = useState("");
     const navigate = useNavigate();
     const [userPwdIncorrect, setUserPwdIncorrect] = useState("");
@@ -28,19 +28,27 @@ export default function LoginForm() {
                 { withCredentials: true }
             ).then(
                 (res) => {
-                    localStorage.setItem("userValidity", res.data);
-                    setUserValidity(res.data === "valid");
+                    if(res.data.user){
+                        setUserValidityWrapper({...res.data, user: {...res.data.user, password: ""}});
+                        localStorage.setItem("userValidityWrapper", JSON.stringify({...res.data, user: {...res.data.user, password: ""}}));
+                    }
+                    else{
+                        setUserValidityWrapper(res.data);
+                        localStorage.setItem("userValidityWrapper", JSON.stringify(res.data));
+                    }
+
                     setUserPwdIncorrect(res.data);
-                    if (res.data === "valid")
+                    if (res.data.validity === "VALID"){
                         navigate("/Dashboard", { replace: true });
+                    }
                 }
-            )
+            ).catch((err)=>console.error("Error: ", err));
         } else {
             setUserPwdIncorrect("invalid");
         }
     }
 
-    if (userValidity) {
+    if (userValidityWrapper.validity === "VALID") {
         return null;
     }
 

@@ -5,18 +5,18 @@ import BackendAxios from "./BackendAxios";
 
 export default function Logout(){
     const navigate = useNavigate();    
-    const {setUserValidity} = useUserContext();
+    const {setUserValidityWrapper} = useUserContext();
     useEffect(
         ()=>{
             BackendAxios.post("/Logout",{},{withCredentials: true}).then(
                 (res)=>{
                     localStorage.clear();
-                    setUserValidity(false);
+                    setUserValidityWrapper({user: null, validity: "INVALID"});
                     navigate("/", {replace : true});
                 }
             ).catch((err)=>console.error("Error: ", err))
         }
-        ,[setUserValidity, navigate]
+        ,[setUserValidityWrapper, navigate]
     );
     return null;
 }

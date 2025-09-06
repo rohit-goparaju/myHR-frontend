@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Home from './Home';
 import Login from './Login';
 import About from './About';
@@ -15,24 +15,29 @@ export function useUserContext(){
 }
 
 export default function App(){
-  const [userValidity, setUserValidity] = useState(false);
+  const [userValidityWrapper, setUserValidityWrapper] = useState({user: null, validity: "INVALID"});
 
   useEffect(
     ()=>{
-      setUserValidity(localStorage.getItem("userValidity")==="valid");
+      // console.log("UserVlidityWrapper Init from App.jsx:  ",localStorage.getItem("userValidityWrapper"));
+      if(localStorage.getItem("userValidityWrapper")){
+        setUserValidityWrapper(JSON.parse(localStorage.getItem("userValidityWrapper")));
+      }
     }
     ,[]
   );
 
   return (
     <>
-    <userContext.Provider value={{userValidity, setUserValidity}}>
+    <userContext.Provider value={{userValidityWrapper, setUserValidityWrapper}}>
       <Routes>
         <Route path="/" element={<Home></Home>}>
           <Route index element={<Login></Login>}></Route>
           <Route path="About" element={<About></About>}></Route>
           <Route path="Dashboard" element={<RequireValidUser><Dashboard></Dashboard></RequireValidUser>}></Route>
           <Route path="Logout" element={<Logout></Logout>}></Route>
+
+          <Route path="*" element={<Navigate to="/Dashboard" replace></Navigate>}></Route>
         </Route>
       </Routes>
     </userContext.Provider>

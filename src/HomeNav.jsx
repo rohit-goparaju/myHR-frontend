@@ -6,7 +6,7 @@ import { useState } from "react";
 import { useUserContext } from "./App";
 
 export default function HomeNav(){
-    const {userValidity} = useUserContext();
+    const {userValidityWrapper} = useUserContext();
     
     return (
         <nav className="navbar navbar-dark bg-dark">
@@ -25,7 +25,7 @@ export default function HomeNav(){
                     <NavLink to='/About' className="nav-link">About</NavLink>
                 </li>
                 {
-                userValidity && 
+                userValidityWrapper.validity === "VALID" && 
                 <>               
                 <li className="nav-item">
                     <NavLink to="/Dashboard" className="nav-link">Dashboard</NavLink>

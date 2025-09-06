@@ -1,9 +1,15 @@
+import AdminDashboard from "./AdminDashboard";
+import { useUserContext } from "./App";
+import EmployeeDashboard from "./EmployeeDashboard";
+import HRDashboard from "./HRDashboard";
+
 export default function Dashboard(){
-    return (
-        <div className="w-100 h-100 d-flex justify-content-center align-items-center">
-        <div className="rounded w-100 text-bg-primary m-5 p-5 text-center">
-            <h1>Dashboard coming soon.....</h1>
-        </div>
-        </div>
+    const {userValidityWrapper} = useUserContext();
+    return(
+        <>
+           {userValidityWrapper.user.level === "ADMIN" && <AdminDashboard></AdminDashboard>}
+           {userValidityWrapper.user.level === "HR" && <HRDashboard></HRDashboard>}
+           {userValidityWrapper.user.level === "EMPLOYEE" && <EmployeeDashboard></EmployeeDashboard>}
+        </>
     );
 }

@@ -3,16 +3,16 @@ import { useUserContext } from "./App"
 import { useEffect } from "react";
 
 export default function RequireValidUser({children}){
-    const {userValidity} = useUserContext();
+    const {userValidityWrapper} = useUserContext();
     const navigate = useNavigate();
 
     useEffect(()=>{
-        if(!userValidity){
+        if(userValidityWrapper.validity === "INVALID"){
             navigate("/Logout", {replace: true});
         }
-    },[userValidity, navigate])
+    },[userValidityWrapper, navigate])
 
-    if(userValidity){
+    if(userValidityWrapper.validity !== "INVALID"){
         return children;
     }else{
         return null;
