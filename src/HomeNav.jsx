@@ -33,7 +33,10 @@ export default function HomeNav(){
 
                     <li className="nav-item dropdown">
                         <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">{userValidityWrapper.user.username}</a>
-                        <ul id="userSettingsDropdownList" className="dropdown-menu position-absolute">
+                        <ul id="userSettingsDropdownList" className="dropdown-menu position-absolute shadow">
+                            <li>
+                                <NavLink to="/Profile" className="dropdown-item">Profile</NavLink>
+                            </li>
                             <li>
                                 <NavLink to="/Logout" className="dropdown-item">Logout</NavLink>
                             </li>

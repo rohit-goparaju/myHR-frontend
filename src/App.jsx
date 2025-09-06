@@ -7,6 +7,10 @@ import Logout from "./Logout";
 import { createContext, useContext, useEffect } from "react";
 import { useState } from "react";
 import RequireValidUser from "./RequireValidUser";
+import UserDetails from "./UserDetails";
+import UserProfile from "./UserProfile";
+import SecurityQuestion from "./SecurityQuestion";
+import ForgotPassword from "./ForgotPassword";
 
 const userContext = createContext();
 
@@ -36,7 +40,9 @@ export default function App(){
           <Route path="About" element={<About></About>}></Route>
           <Route path="Dashboard" element={<RequireValidUser><Dashboard></Dashboard></RequireValidUser>}></Route>
           <Route path="Logout" element={<Logout></Logout>}></Route>
-
+          <Route path="Profile" element={<RequireValidUser><UserProfile></UserProfile></RequireValidUser>}></Route>
+          <Route path="ForgotPassword" element={<ForgotPassword></ForgotPassword>}></Route>
+        
           <Route path="*" element={<Navigate to="/Dashboard" replace></Navigate>}></Route>
         </Route>
       </Routes>

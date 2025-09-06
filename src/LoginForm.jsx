@@ -3,6 +3,7 @@ import styles from './LoginForm.module.css';
 import { Link, useNavigate } from "react-router-dom";
 import BackendAxios from './BackendAxios';
 import { useUserContext } from "./App";
+import { validatePassword, validateUsername } from "./myUtil";
 
 export default function LoginForm() {
     const [inputs, setInputs] = useState({});
@@ -18,28 +19,26 @@ export default function LoginForm() {
 
     function handleSubmit(event) {
         event.preventDefault();
-        if (inputs.pwd.match(/^(([a-z](?=[^\s]*[A-Z]+[^\s]*))|([A-Z](?=[^\s]*[a-z]+[^\s]*)))(?=[^\s]*[^a-zA-Z0-9]+[^\s]*)(?=[^\s]*[0-9]+[^\s]*)[^\s]*/g) &&
-            inputs.username.match(/[a-z][a-z0-9\.]*@myHR\.in/g)) {
+        if (validatePassword(inputs.pwd) && validateUsername(inputs.username)) {
             BackendAxios.post("/Login",
                 {
                     username: inputs.username,
                     password: inputs.pwd
-                },
+                },  
                 { withCredentials: true }
             ).then(
                 (res) => {
-                    if(res.data.user){
-                        setUserValidityWrapper({...res.data, user: {...res.data.user, password: ""}});
-                        localStorage.setItem("userValidityWrapper", JSON.stringify({...res.data, user: {...res.data.user, password: ""}}));
-                    }
-                    else{
-                        setUserValidityWrapper(res.data);
-                        localStorage.setItem("userValidityWrapper", JSON.stringify(res.data));
-                    }
+                    setUserValidityWrapper(res.data);
+
+                    // console.log(res);
+
+                    localStorage.setItem("userValidityWrapper", JSON.stringify(res.data));
 
                     setUserPwdIncorrect(res.data);
                     if (res.data.validity === "VALID"){
                         navigate("/Dashboard", { replace: true });
+                    }else{
+                        setUserPwdIncorrect("invalid");
                     }
                 }
             ).catch((err)=>console.error("Error: ", err));
@@ -67,7 +66,7 @@ export default function LoginForm() {
                     {userPwdIncorrect === "invalid" && <span className="text-danger">invalid username or password</span>}
                     <input type="submit" value="Login" className="btn btn-primary"></input>
                     <div className="text-end">
-                        <Link to="/">Forgot password?</Link>
+                        <Link to="/ForgotPassword">Forgot password?</Link>
                     </div>
                 </form>
             </div>
