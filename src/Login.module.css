@@ -1,6 +1,7 @@
-.loginContainer{
-    position: relative;
-    top: 10%;
+.loginContainerWrapper{
+    width: 100%;
+    height: 100%;
+    /* border: 2px solid red; */
 }
 
 .loginFormContainer{
@@ -12,11 +13,6 @@
 }
 
 @media only screen and (max-width: 991px){
-    .loginContainer{
-        position: static;
-        margin-bottom: 5vh;
-        /* border: 2px solid red; */
-    }
     .welcomeCol{
     display: flex;
     justify-content: center;

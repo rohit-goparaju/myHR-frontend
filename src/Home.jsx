@@ -6,8 +6,9 @@ export default function Home(){
     return(
         <>
         <HomeNav></HomeNav>
-        <Outlet></Outlet>
-        <div style={{height: "5vh"}}></div>
+        <div className="flex-grow-1">
+            <Outlet></Outlet>
+        </div>
         <MyFooter></MyFooter>
         </>
     );
